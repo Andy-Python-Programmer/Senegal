@@ -126,7 +126,10 @@ static void concatenateStrings(VM* vm) {
 static bool call(VM* vm, GCClosure* closure, int arity) {
 
   if (arity != closure->function->arity) {
-    throwRuntimeError(vm, "Function %s expected %d arguments but found %d", closure->function->id->chars, closure->function->arity, arity);
+    throwRuntimeError(
+      vm, 
+      "Function `%s` expected %d argument%s but found %d", closure->function->id->chars, closure->function->arity, closure->function->arity == 1 ? "" : "s", arity
+    );
     return false;
   }
 

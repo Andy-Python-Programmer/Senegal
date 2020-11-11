@@ -1,5 +1,7 @@
 #include <stdio.h>
 #include <float.h>
+#include <stdlib.h>
+
 #include "snumCore.h"
 #include "../includes/sparser.h"
 #include "../includes/sapi.h"
@@ -37,13 +39,19 @@ static Constant numIsNeg(VM* vm, int arity, Constant* args) {
   return BOOL_CONST(AS_NUMBER(args[0]) < 0);
 }
 
+static Constant numAbs(VM* vm, int arity, Constant* args) {
+  return NUM_CONST(abs(AS_NUMBER(args[0])));
+}
+
 void initNumClass(VM *vm) {
   vm->numClass = newClass(vm, copyString(vm, NULL, "num", 3), false, false);
+
   defineClassNativeFunc(vm, "isFinite", numIsFinite, vm->numClass);
   defineClassNativeFunc(vm, "isInfinite", numIsInfinite, vm->numClass);
   defineClassNativeFunc(vm, "toString", numToString, vm->numClass);
   defineClassNativeFunc(vm, "isNaN", numIsNan, vm->numClass);
   defineClassNativeFunc(vm, "isNeg", numIsNeg, vm->numClass);
+  defineClassNativeFunc(vm, "abs", numAbs, vm->numClass);
 
   defineClassNativeField(vm, "type", GC_OBJ_CONST(copyString(vm, NULL, "num", 3)), vm->numClass);
   defineClassNativeField(vm, "nan", NUM_CONST(NAN), vm->numClass);

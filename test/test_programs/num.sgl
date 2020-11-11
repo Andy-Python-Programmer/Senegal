@@ -8,3 +8,4 @@ println(neginfinity.isInfinite()); // true
 println(nan.isNaN()); // true
 println(neginfinity.isNeg()); // true
 println(0/0); // -1.#IND
+println(-100.abs()); // 100
